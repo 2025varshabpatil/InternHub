@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>InternHub</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar">
+
+        <div class="logo">
+            Intern<span>Hub</span>
+        </div>
+
+        <div class="nav-links">
+            <button onclick="showSection('home')">Home</button>
+            <button onclick="showSection('profile')">Profile</button>
+            <button onclick="showSection('applications')">
+                My Applications
+            </button>
+            <button onclick="showSection('dashboard')">
+                Dashboard
+            </button>
+            <button onclick="showSection('add')">
+                + Add Internship
+            </button>
+        </div>
+
+    </nav>
+
+
+    <!-- HOME -->
+    <section id="home" class="section">
+
+        <div class="hero">
+
+            <div>
+                <h1>
+                    Find Your
+                    <span>Perfect Internship</span>
+                </h1>
+
+                <p>
+                    Discover internships, build your profile,
+                    and take the next step toward your career.
+                </p>
+            </div>
+
+        </div>
+
+
+        <!-- SEARCH -->
+        <div class="search-container">
+
+            <input
+                type="text"
+                id="searchInput"
+                placeholder="Search internships by title, company, location or skills..."
+                oninput="filterInternships()"
+            >
+
+            <select
+                id="categoryFilter"
+                onchange="filterInternships()"
+            >
+                <option value="">All Categories</option>
+                <option value="AIML">AI / ML</option>
+                <option value="Web Development">
+                    Web Development
+                </option>
+                <option value="Data Science">
+                    Data Science
+                </option>
+                <option value="Cyber Security">
+                    Cyber Security
+                </option>
+                <option value="App Development">
+                    App Development
+                </option>
+                <option value="General">General</option>
+            </select>
+
+            <input
+                type="text"
+                id="locationFilter"
+                placeholder="Location"
+                oninput="filterInternships()"
+            >
+
+            <button onclick="loadInternships()">
+                View All
+            </button>
+
+        </div>
+
+
+        <!-- INTERNSHIPS -->
+        <div class="section-heading">
+
+            <div>
+                <h2>Available Internships</h2>
+                <p>
+                    Explore opportunities and apply directly.
+                </p>
+            </div>
+
+        </div>
+
+        <div
+            id="internshipGrid"
+            class="internship-grid"
+        >
+        </div>
+
+    </section>
+
+
+
+    <!-- ADD INTERNSHIP -->
+    <section
+        id="add"
+        class="section hidden"
+    >
+
+        <div class="form-card">
+
+            <h2>Add New Internship</h2>
+
+            <p>
+                Create an internship opportunity for students.
+            </p>
+
+            <form id="internshipForm">
+
+                <input
+                    type="text"
+                    id="title"
+                    placeholder="Internship Title"
+                    required
+                >
+
+                <input
+                    type="text"
+                    id="company"
+                    placeholder="Company Name"
+                    required
+                >
+
+                <input
+                    type="text"
+                    id="location"
+                    placeholder="Location"
+                    required
+                >
+
+                <select
+                    id="category"
+                    required
+                >
+                    <option value="">
+                        Select Category
+                    </option>
+
+                    <option value="AIML">
+                        AI / ML
+                    </option>
+
+                    <option value="Web Development">
+                        Web Development
+                    </option>
+
+                    <option value="Data Science">
+                        Data Science
+                    </option>
+
+                    <option value="Cyber Security">
+                        Cyber Security
+                    </option>
+
+                    <option value="App Development">
+                        App Development
+                    </option>
+
+                    <option value="General">
+                        General
+                    </option>
+                </select>
+
+                <textarea
+                    id="description"
+                    placeholder="Internship Description"
+                    required
+                ></textarea>
+
+                <input
+                    type="text"
+                    id="skills"
+                    placeholder="Required Skills (e.g. Python, SQL, ML)"
+                    required
+                >
+
+                <button
+                    type="submit"
+                    class="primary-btn"
+                >
+                    Add Internship
+                </button>
+
+            </form>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- PROFILE -->
+    <section
+        id="profile"
+        class="section hidden"
+    >
+
+        <div class="form-card">
+
+            <h2>Student Profile</h2>
+
+            <p>
+                Save your details for internship applications.
+            </p>
+
+            <form id="profileForm">
+
+                <input
+                    type="text"
+                    id="profileName"
+                    placeholder="Full Name"
+                    required
+                >
+
+                <input
+                    type="email"
+                    id="profileEmail"
+                    placeholder="Email"
+                    required
+                >
+
+                <input
+                    type="tel"
+                    id="profilePhone"
+                    placeholder="Phone Number"
+                >
+
+                <button
+                    type="submit"
+                    class="primary-btn"
+                >
+                    Save Profile
+                </button>
+
+            </form>
+
+            <div id="profileMessage"></div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- APPLICATIONS -->
+    <section
+        id="applications"
+        class="section hidden"
+    >
+
+        <div class="section-heading">
+
+            <div>
+                <h2>My Applications</h2>
+
+                <p>
+                    Track the internships you have applied for.
+                </p>
+            </div>
+
+        </div>
+
+        <div
+            id="applicationsContainer"
+            class="applications-container"
+        >
+        </div>
+
+    </section>
+
+
+
+    <!-- DASHBOARD -->
+    <section
+        id="dashboard"
+        class="section hidden"
+    >
+
+        <div class="section-heading">
+
+            <div>
+                <h2>Dashboard</h2>
+
+                <p>
+                    Overview of InternHub.
+                </p>
+            </div>
+
+        </div>
+
+
+        <div class="stats-grid">
+
+            <div class="stat-card">
+
+                <h3 id="totalInternships">
+                    0
+                </h3>
+
+                <p>
+                    Total Internships
+                </p>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <h3 id="totalApplications">
+                    0
+                </h3>
+
+                <p>
+                    Total Applications
+                </p>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <h3 id="totalUsers">
+                    0
+                </h3>
+
+                <p>
+                    Registered Students
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- FOOTER -->
+    <footer>
+
+        <div class="logo">
+            Intern<span>Hub</span>
+        </div>
+
+        <p>
+            Connecting students with opportunities.
+        </p>
+
+        <p>
+            © 2026 InternHub
+        </p>
+
+    </footer>
+
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
